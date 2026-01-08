@@ -1,0 +1,22 @@
+version: '1.0.0'
+
+services:
+  todo-app-1:
+    image: todo-app
+    container_name: todo-app-c1
+    ports:
+      - "4000:4000"
+    environment:
+      - PORT=4000
+      - MONGODB_URL=${MONGODB_URL}
+    restart: unless-stopped
+
+  todo-app-2:
+    image: todo-app
+    container_name: todo-app-c2
+    ports:
+      - "4001:4000"
+    environment:
+      - PORT=4000
+      - MONGODB_URL=${MONGODB_URL}
+    restart: unless-stopped
