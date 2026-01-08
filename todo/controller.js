@@ -3,15 +3,14 @@ import { createTodoSchema, updateTodoSchema } from "./schema.js";
 
 export const createTodo = async (req, res) => {
     try {
-        const { title, description, status } = req.body;
-        const { error } = createTodoSchema.safeParse(req.body);
+        const { data, error } = createTodoSchema.safeParse(req.body);
         if (error) {
             return res.status(400).json({
                 status: false,
-                message: error.message
+                message: JSON.parse(error.message)[0].message
             });
         }
-
+                const { title, description, status } = data;
         const existingTodo = await Todo.findOne({ title, user: req.user.id });
         if (existingTodo) {
             return res.status(400).json({
@@ -79,14 +78,14 @@ export const getTodoById = async (req, res) => {
 
 export const updateTodo = async (req, res) => {
     try {
-        const { title, description, status } = req.body;
-        const { error } = updateTodoSchema.safeParse(req.body);
+        const { data,error } = updateTodoSchema.safeParse(req.body);
         if (error) {
             return res.status(400).json({
                 status: false,
-                message: error.message
+                message: JSON.parse(error.message)[0].message
             });
         }
+           const { title, description, status } = data;
         const todo = await Todo.findByIdAndUpdate(req.params.id, { title, description, status });
         if (!todo) {
             return res.status(404).json({

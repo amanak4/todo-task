@@ -9,7 +9,7 @@ export const login = async (req, res, next) => {
     if (error) {
         return res.status(400).json({
             status: false,
-            message: error.message
+            message: JSON.parse(error.message)[0].message
         });
     }
     passport.authenticate('local', (err, user, info) => {
@@ -53,10 +53,11 @@ export const signup = async (req, res) => {
     try {
         const { name, email, password } = req.body;
         const { error } = signupSchema.safeParse(req.body);
+        // console.log(JSON.parse(error.message)[0].message);
         if (error) {
             return res.status(400).json({
                 status: false,
-                message: error.message
+                message: JSON.parse(error.message)[0].message
             });
         }
         

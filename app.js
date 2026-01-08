@@ -24,8 +24,8 @@ app.get("/",(req,res)=>{
     })
 })
 
-app.use("/auth",authRoutes);
-app.use("/todo",todoRoutes);
+app.use("/api/v1/auth",authRoutes);
+app.use("/api/v1/todo",todoRoutes);
 
 
 app.listen(PORT, () => {
